@@ -28,3 +28,7 @@ func (u *Url) Add(url entity.Url) entity.Url {
 func (u *Url) FindAll() map[string]string {
 	return u.Urls
 }
+
+func (u *Url) FindByShortenedId(id string) string {
+	return u.Urls[id]
+}

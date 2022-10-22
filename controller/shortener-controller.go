@@ -26,3 +26,13 @@ func FindAllUrls(c *gin.Context) {
 
 	c.JSON(http.StatusOK, urls)
 }
+
+func FindUrlByUrlId(c *gin.Context) {
+	urlId := c.Param("urlId")
+
+	goToUrl := urlService.FindByShortenedId(urlId)
+
+	c.JSON(http.StatusOK, gin.H{
+		"goto": goToUrl,
+	})
+}

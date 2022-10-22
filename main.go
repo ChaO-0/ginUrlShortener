@@ -13,5 +13,7 @@ func main() {
 
 	r.GET("/urls", controller.FindAllUrls)
 
+	r.GET("/url/:urlId", controller.FindUrlByUrlId)
+
 	r.Run()
 }
