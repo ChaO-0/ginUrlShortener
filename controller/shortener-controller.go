@@ -8,7 +8,9 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-var urlService service.Url = service.Url{}
+var urlService service.Url = service.Url{
+	Urls: make(map[string]string),
+}
 
 func AddUrl(c *gin.Context) {
 	var url entity.Url

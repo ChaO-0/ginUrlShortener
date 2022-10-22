@@ -1,26 +1,30 @@
 package service
 
-import "urlShortener/entity"
+import (
+	"math/rand"
+	"urlShortener/entity"
+)
 
 type Url struct {
-	// urls []entity.Url
-	urls map[string]string
+	Urls map[string]string
 }
 
-var urls = make(map[string]string)
+const letterBytes = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
+func RandStringBytes(n int) string {
+	b := make([]byte, n)
+	for i := range b {
+		b[i] = letterBytes[rand.Intn(len(letterBytes))]
+	}
+	return string(b)
+}
 
 func (u *Url) Add(url entity.Url) entity.Url {
-	// u.urls = append(u.urls, url)
-	// u.urls = map[string]string{
-	// 	url.Link: "willBeRandom",
-	// }
-	u.urls = urls{
-		url.Link: "willBeRandom",
-	}
+	u.Urls[RandStringBytes(6)] = url.Link
 
 	return url
 }
 
 func (u *Url) FindAll() map[string]string {
-	return u.urls
+	return u.Urls
 }
