@@ -5,6 +5,24 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - 8080:8080
+      - 3000:8080
     restart: unless-stopped
     container_name: pemendek
+    volumes:
+      - ./:/app
+
+  pemendek-db:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: passw0rd
+      POSTGRES_DB: goner
+    container_name: pemendek-db
+
+  adminer:
+    image: adminer
+    restart: always
+    ports: 
+      - 8080:8080
+    depends_on: 
+      - pemendek-db
+    container_name: pemendek-adminer
