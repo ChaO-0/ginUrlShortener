@@ -1,28 +1,28 @@
 package controller
 
 import (
+	"fmt"
 	"net/http"
-	"urlShortener/entity"
-	"urlShortener/services"
+	"urlShortener/models"
+	shortenerService "urlShortener/services"
 
 	"github.com/gin-gonic/gin"
 )
 
-var urlService service.Url = service.Url{
-	Urls: make(map[string]string),
-}
-
 func AddUrl(c *gin.Context) {
-	var url entity.Url
+	var url models.Urls
+
+	fmt.Println(&url)
+
 	c.BindJSON(&url)
 
-	newUrl := urlService.Add(url)
+	newUrl := shortenerService.Add(&url)
 
 	c.JSON(http.StatusCreated, newUrl)
 }
 
 func FindAllUrls(c *gin.Context) {
-	urls := urlService.FindAll()
+	urls := shortenerService.FindAll()
 
 	c.JSON(http.StatusOK, urls)
 }
@@ -30,9 +30,11 @@ func FindAllUrls(c *gin.Context) {
 func FindUrlByUrlId(c *gin.Context) {
 	urlId := c.Param("urlId")
 
-	goToUrl := urlService.FindByShortenedId(urlId)
+	shortenedUrl := shortenerService.FindByShortenedId(urlId)
+
+	gotoUrl := "https://gon.er/" + shortenedUrl.ShortenedId
 
 	c.JSON(http.StatusOK, gin.H{
-		"goto": goToUrl,
+		"shortened_url": gotoUrl,
 	})
 }
